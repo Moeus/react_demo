@@ -6,8 +6,5 @@ import App from './App.jsx'
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <App />
-    <h1 class="text-3xl font-bold underline">
-      Hello world!
-    </h1>
   </StrictMode>,
 )
