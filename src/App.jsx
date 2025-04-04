@@ -1,6 +1,13 @@
 import './index.css'
 import {useState,useEffect} from 'react';
-
+import { Alert,Typography } from "antd";
+const App = () => (
+  <>
+    <Alert message="Success Tips" type="success" showIcon />
+    <br />
+    <Alert message="Informational Notes" type="info" showIcon />
+    <br />
+  </>)
 function Square(props) {
   // 解包props
   const { index, updateSquares, step, updaestep,continueable } = props;
@@ -46,6 +53,7 @@ export default function Board() {
   const[continueGame,setContinueGame] = useState(true);
   const[turn,setTurn] = useState("X player first");
   const [winner, setWinner] = useState(null);
+  const [Alerttype, setAlerttype] = useState("info");
   // 形成闭包，函数handleClick无论在哪调用都可以访问到squares
   function UpdatearrayAndcheckwin(i,val) {
     const squaresCopy = squares.slice();
@@ -64,11 +72,13 @@ export default function Board() {
     // 当 state1 改变时，更新 state2
     if (!continueGame) {
       setTurn("Game over "+ winner + " win");
+      setAlerttype("success");
       return;
     }
     if (step === 10 && continueGame) {
       // 检测是否平局
       setTurn("Game over, draw");
+      setAlerttype("warning");
       return;
     }
     if (step==1){
@@ -80,7 +90,9 @@ export default function Board() {
   
   return (
     <>
-      <h1 class="items-center">Welcome to Tic Tac Toe</h1>
+      <Typography.Title level={1} style={{ margin: 0 }}>
+            Welcome to Tic Tac Toe
+      </Typography.Title>
       <div className="board-row">
         <Square index={1} updateSquares={UpdatearrayAndcheckwin} step={step} updaestep={setStep} continueable={continueGame} />
         <Square index={2} updateSquares={UpdatearrayAndcheckwin} step={step} updaestep={setStep} continueable={continueGame} />
@@ -96,7 +108,8 @@ export default function Board() {
         <Square index={8} updateSquares={UpdatearrayAndcheckwin} step={step} updaestep={setStep} continueable={continueGame} />
         <Square index={9} updateSquares={UpdatearrayAndcheckwin} step={step} updaestep={setStep} continueable={continueGame} />
       </div>
-      <h1 class="items-center">{turn}</h1>
+      <Alert message={turn} type={Alerttype} showIcon />
+      <br />
     </>
   );
 }
